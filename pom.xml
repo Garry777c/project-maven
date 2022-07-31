@@ -15,9 +15,39 @@
 
     <dependencies>
 
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.12.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-controls</artifactId>
+            <version>18.0.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.javarush</groupId>
+            <artifactId>desktop-game-engine</artifactId>
+            <version>1.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.junit.juputer</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>5.8.2</version>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
     <build>
+
+        <resources>
+
+        </resources>
+
         <plugins>
             <!-- Usual compilation -->
             <plugin>
@@ -38,7 +68,65 @@
                     <mainClass>com.javarush.games.racer.RacerGame</mainClass>
                 </configuration>
             </plugin>
+
+            <!-- game-engine dependency -->
+            <plugin>
+                <groupId>com.javarush</groupId>
+                <artifactId>desktop-game-engine</artifactId>
+                <version>1.0</version>
+                <configuration>
+                    <file>${project.build.directory}
+                        /${project.artifactId}/lib/desktop-game-engine.jar</file>
+                    <url>${project.distributionManagement.repository.url}</url>
+                    <repositoryID>
+                        ${project.distributionManagement.repository.id}
+                    </repositoryID>
+                </configuration>
+            </plugin>
+
+            <!-- gathering plugin -->
+            <plugin>
+                <groupId>org.apache.maven</groupId>
+                <artifactId>maven</artifactId>
+                <version>3.6.0</version>
+            </plugin>
+
+            <!-- jar plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plagin</artifactId>
+                <version>3.10.1</version>
+
+                <configuration>
+                    <includes>
+                        <include>**/properties/*</include>
+                    </includes>
+                <archive>
+                    <manifest>
+                        <addClasspath>true</addClasspath>
+                        <classpathPrefix>lib/</classpathPrefix>
+                        <classPath></classPath>
+                        <mainClass>org.eclipse.jdt.internal.jarinjarloader.JarRsrcLoader</mainClass>
+                        <rsrcMainClass>com.javarush.games.racer.RacerGame</rsrcMainClass>
+                    </manifest>
+                </archive>
+
+                </configuration>
+
+
+
+            </plugin>
+
+            <!-- -->
+            <plugin>
+                <groupId></groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version></version>
+            </plugin>
+
+
         </plugins>
     </build>
+
 
 </project>
